@@ -1,7 +1,10 @@
 name: Sitemap Crawler
 
 on:
-  workflow_dispatch:
+  workflow_dispatch:    # 允许手动触发
+  schedule:
+    - cron: '0 0 * * *'  # 每天 UTC 0:00 运行
+  
 
 jobs:
   crawl:
@@ -22,6 +25,7 @@ jobs:
         run: |
           pip install sitemap-gazer
           sitemap-gazer
+          sitemap-gazer readme    # 生成报告
 
       - name: Commit and push if changes
         uses: stefanzweifel/git-auto-commit-action@v5
